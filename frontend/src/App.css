@@ -1,0 +1,22 @@
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.btn {
+    border: none;
+    padding: 6px 10px;
+    margin: 0 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.btn.save { background: #28a745; color: #fff; }
+.btn.cancel { background: #dc3545; color: #fff; }
+.btn.edit { background: #ffc107; color: #333; }
+.btn.delete { background: #dc3545; color: #fff; }

@@ -1,0 +1,41 @@
+.transacao-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.transacao-table th,
+.transacao-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.transacao-table th {
+    background: #f8f9fa;
+    text-align: left;
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.badge-receita {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.badge-despesa {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.row-receita {
+    background-color: #f1f9f1;
+}
+
+.row-despesa {
+    background-color: #fdf2f2;
+}
