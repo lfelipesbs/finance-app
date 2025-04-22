@@ -55,7 +55,7 @@ cd finance-app
 
 ## ⚙️ Configurar Back‑end (Java/Spring Boot)
 
-1. Abra `backend/src/main/resources/application.properties` e ajuste:
+1. Abra `backend/src/main/resources/application.example.properties` (altere o nome do arquivo para application.properties) e ajuste:
 
    ```properties
    spring.datasource.url=jdbc:mysql://localhost:3306/finance_app?useSSL=false&serverTimezone=UTC
