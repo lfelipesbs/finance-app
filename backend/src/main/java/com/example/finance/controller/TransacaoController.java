@@ -23,12 +23,12 @@ public class TransacaoController {
     public List<Transacao> findAll(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim,
+            @RequestParam(required = false) Transacao.Tipo tipo,
+            @RequestParam(required = false) Long categoriaId,
+            @RequestParam(required = false) String descricao,
             @RequestParam(required = false) String orderBy,
             @RequestParam(required = false) String direction) {
-        if (inicio != null || fim != null) {
-            return transacaoRepository.findByPeriodo(inicio, fim, orderBy, direction);
-        }
-        return transacaoRepository.findAll(orderBy, direction);
+        return transacaoRepository.findWithFilters(inicio, fim, tipo, categoriaId, descricao, orderBy, direction);
     }
 
     @GetMapping("/mes-ano")

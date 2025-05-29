@@ -42,7 +42,17 @@ export default function Dashboard() {
 
     const carregarDados = useCallback(async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/transacoes/mes-ano?mes=${mes}&ano=${ano}`);
+            const primeiroDia = new Date(ano, mes - 1, 1);
+            const ultimoDia = new Date(ano, mes, 0);
+
+            const response = await axios.get('http://localhost:8080/api/transacoes', {
+                params: {
+                    inicio: format(primeiroDia, 'yyyy-MM-dd'),
+                    fim: format(ultimoDia, 'yyyy-MM-dd'),
+                    orderBy: 'dataTransacao',
+                    direction: 'DESC'
+                }
+            });
             const transacoes = response.data;
 
             const totalReceitas = transacoes
@@ -59,7 +69,15 @@ export default function Dashboard() {
                 saldo: totalReceitas - totalDespesas
             });
 
-            const responseLatest = await axios.get(`http://localhost:8080/api/transacoes/latest?mes=${mes}&ano=${ano}`);
+            const responseLatest = await axios.get('http://localhost:8080/api/transacoes', {
+                params: {
+                    inicio: format(primeiroDia, 'yyyy-MM-dd'),
+                    fim: format(ultimoDia, 'yyyy-MM-dd'),
+                    limit: 5,
+                    orderBy: 'dataTransacao',
+                    direction: 'DESC'
+                }
+            });
             setUltimasTransacoes(responseLatest.data);
 
             const diasNoMes = new Date(ano, mes, 0).getDate();

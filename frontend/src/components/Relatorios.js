@@ -26,15 +26,21 @@ export default function Relatorios() {
 
     const carregarDados = useCallback(async () => {
         try {
-            const params = {}
+            const params = {
+                orderBy: 'dataTransacao',
+                direction: 'ASC'
+            }
+            
             if (periodo.inicio) params.inicio = periodo.inicio
             if (periodo.fim) params.fim = periodo.fim
 
             const response = await axios.get('http://localhost:8080/api/transacoes', { params })
             const transacoes = response.data
+
             const receitas = transacoes
                 .filter(t => t.tipo === 'RECEITA')
                 .reduce((acc, t) => acc + Number(t.valor), 0)
+
             const despesas = transacoes
                 .filter(t => t.tipo === 'DESPESA')
                 .reduce((acc, t) => acc + Number(t.valor), 0)
@@ -115,7 +121,7 @@ export default function Relatorios() {
         } catch (error) {
             console.error('Erro ao carregar dados:', error)
         }
-    }, [periodo]);
+    }, [periodo])
 
     useEffect(() => {
         carregarDados()

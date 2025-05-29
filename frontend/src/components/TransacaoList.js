@@ -32,11 +32,10 @@ export default function TransacaoList() {
 
     const carregarTransacoes = useCallback(async () => {
         try {
-            let url = 'http://localhost:8080/api/transacoes'
-            const params = {}
-
-            params.orderBy = ordenacao.coluna
-            params.direction = ordenacao.direcao
+            const params = {
+                orderBy: ordenacao.coluna,
+                direction: ordenacao.direcao
+            }
 
             if (filtros.inicio) {
                 params.inicio = filtros.inicio
@@ -44,19 +43,19 @@ export default function TransacaoList() {
             if (filtros.fim) {
                 params.fim = filtros.fim
             }
-            if (filtros.categoriaId) {
-                url = `http://localhost:8080/api/transacoes/categoria/${filtros.categoriaId}`
-            }
             if (filtros.tipo) {
-                url = `http://localhost:8080/api/transacoes/tipo/${filtros.tipo}`
+                params.tipo = filtros.tipo
+            }
+            if (filtros.categoriaId) {
+                params.categoriaId = filtros.categoriaId
             }
 
-            const response = await axios.get(url, { params })
+            const response = await axios.get('http://localhost:8080/api/transacoes', { params })
             setTransacoes(response.data)
         } catch (error) {
             console.error('Erro ao carregar transações:', error)
         }
-    }, [filtros, ordenacao]);
+    }, [filtros, ordenacao])
 
     const carregarCategorias = useCallback(async () => {
         try {

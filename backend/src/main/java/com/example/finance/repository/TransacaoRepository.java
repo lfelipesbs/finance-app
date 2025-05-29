@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -97,17 +98,60 @@ public class TransacaoRepository {
     public List<Transacao> findByTipo(Transacao.Tipo tipo, String orderBy, String direction) {
         String orderClause = buildOrderClause(orderBy, direction);
         String query = "SELECT t.*, c.nome as categoria_nome FROM Transacao t " +
-                      "LEFT JOIN Categoria c ON t.categoria_id = c.id " +
-                      "WHERE t.tipo = ? " + orderClause;
+                        "LEFT JOIN Categoria c ON t.categoria_id = c.id " +
+                        "WHERE t.tipo = ? " + orderClause;
         return jdbcTemplate.query(query, rowMapper, tipo.name());
     }
 
     public List<Transacao> findByCategoriaId(Long categoriaId, String orderBy, String direction) {
         String orderClause = buildOrderClause(orderBy, direction);
         String query = "SELECT t.*, c.nome as categoria_nome FROM Transacao t " +
-                      "LEFT JOIN Categoria c ON t.categoria_id = c.id " +
-                      "WHERE t.categoria_id = ? " + orderClause;
+                        "LEFT JOIN Categoria c ON t.categoria_id = c.id " +
+                        "WHERE t.categoria_id = ? " + orderClause;
         return jdbcTemplate.query(query, rowMapper, categoriaId);
+    }
+
+    public List<Transacao> findWithFilters(
+            LocalDate inicio,
+            LocalDate fim,
+            Transacao.Tipo tipo,
+            Long categoriaId,
+            String descricao,
+            String orderBy,
+            String direction) {
+        
+        StringBuilder query = new StringBuilder(
+            "SELECT t.*, c.nome as categoria_nome FROM Transacao t " +
+            "LEFT JOIN Categoria c ON t.categoria_id = c.id " +
+            "WHERE 1=1 "
+        );
+        
+        List<Object> params = new ArrayList<>();
+        
+        if (inicio != null) {
+            query.append("AND t.data >= ? ");
+            params.add(inicio);
+        }
+        if (fim != null) {
+            query.append("AND t.data <= ? ");
+            params.add(fim);
+        }
+        if (tipo != null) {
+            query.append("AND t.tipo = ? ");
+            params.add(tipo.name());
+        }
+        if (categoriaId != null) {
+            query.append("AND t.categoria_id = ? ");
+            params.add(categoriaId);
+        }
+        if (descricao != null && !descricao.trim().isEmpty()) {
+            query.append("AND LOWER(t.descricao) LIKE LOWER(?) ");
+            params.add("%" + descricao.trim() + "%");
+        }
+        
+        query.append(buildOrderClause(orderBy, direction));
+        
+        return jdbcTemplate.query(query.toString(), rowMapper, params.toArray());
     }
 
     private String buildOrderClause(String orderBy, String direction) {
@@ -138,12 +182,10 @@ public class TransacaoRepository {
 
         String orderDirection = (direction == null || !"ASC".equalsIgnoreCase(direction)) ? "DESC" : "ASC";
         
-        // Se não estiver ordenando por data, adiciona data como segundo critério
         if (!"t.data".equals(orderColumn)) {
             return String.format("ORDER BY %s %s, t.data DESC, t.id DESC", orderColumn, orderDirection);
         }
         
-        // Se estiver ordenando por data, adiciona id como segundo critério
         return String.format("ORDER BY %s %s, t.id DESC", orderColumn, orderDirection);
     }
 
