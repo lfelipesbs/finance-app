@@ -5,8 +5,10 @@ import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { formatMoney } from '../utils/format'
 import './TransacaoList.css'
+import { useLocation } from 'react-router-dom'
 
 export default function TransacaoList() {
+    const location = useLocation();
     const [transacoes, setTransacoes] = useState([])
     const [categorias, setCategorias] = useState([])
     const [filtros, setFiltros] = useState({
@@ -67,9 +69,25 @@ export default function TransacaoList() {
     }, []);
 
     useEffect(() => {
-        carregarCategorias()
-        carregarTransacoes()
-    }, [filtros, ordenacao, carregarCategorias, carregarTransacoes])
+        const filtrosIniciais = location.state?.filtros;
+        if (filtrosIniciais) {
+            setFiltros(filtrosIniciais);
+
+            const params = {
+                orderBy: ordenacao.coluna,
+                direction: ordenacao.direcao,
+                ...filtrosIniciais
+            };
+            axios.get('http://localhost:8080/api/transacoes', { params })
+                .then(response => setTransacoes(response.data))
+                .catch(error => console.error('Erro ao carregar transações:', error));
+        }
+        carregarCategorias();
+    }, [location.state, carregarCategorias, ordenacao]);
+
+    useEffect(() => {
+        carregarTransacoes();
+    }, [filtros, ordenacao, carregarTransacoes]);
 
     const handleFiltroChange = (e) => {
         const { name, value } = e.target

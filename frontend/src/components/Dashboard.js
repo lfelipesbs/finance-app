@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Card, Row, Col, Table, Form } from 'react-bootstrap';
+import { Card, Row, Col, Table, Form, Button } from 'react-bootstrap';
 import { Line } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -15,6 +15,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { formatMoney } from '../utils/format';
+import { useNavigate } from 'react-router-dom';
 
 ChartJS.register(
     CategoryScale,
@@ -39,6 +40,7 @@ export default function Dashboard() {
     });
     const [mes, setMes] = useState(new Date().getMonth() + 1);
     const [ano, setAno] = useState(new Date().getFullYear());
+    const navigate = useNavigate();
 
     const carregarDados = useCallback(async () => {
         try {
@@ -69,13 +71,11 @@ export default function Dashboard() {
                 saldo: totalReceitas - totalDespesas
             });
 
-            const responseLatest = await axios.get('http://localhost:8080/api/transacoes', {
+            const responseLatest = await axios.get('http://localhost:8080/api/transacoes/latest', {
                 params: {
-                    inicio: format(primeiroDia, 'yyyy-MM-dd'),
-                    fim: format(ultimoDia, 'yyyy-MM-dd'),
                     limit: 5,
-                    orderBy: 'dataTransacao',
-                    direction: 'DESC'
+                    mes: mes,
+                    ano: ano
                 }
             });
             setUltimasTransacoes(responseLatest.data);
@@ -137,6 +137,20 @@ export default function Dashboard() {
         'Novembro',
         'Dezembro'
     ];
+
+    const handleVerTodas = () => {
+        const primeiroDia = new Date(ano, mes - 1, 1);
+        const ultimoDia = new Date(ano, mes, 0);
+        
+        navigate('/transacoes', {
+            state: {
+                filtros: {
+                    inicio: format(primeiroDia, 'yyyy-MM-dd'),
+                    fim: format(ultimoDia, 'yyyy-MM-dd')
+                }
+            }
+        });
+    };
 
     return (
         <div className="container-fluid px-4">
@@ -232,7 +246,12 @@ export default function Dashboard() {
 
             <Card>
                 <Card.Body>
-                    <Card.Title>Últimas Transações</Card.Title>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <Card.Title>Últimas Transações</Card.Title>
+                        <Button variant="outline-primary" onClick={handleVerTodas}>
+                            Ver todas do mês
+                        </Button>
+                    </div>
                     <Table hover>
                         <thead>
                             <tr>
