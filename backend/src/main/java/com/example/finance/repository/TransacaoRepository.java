@@ -31,8 +31,8 @@ public class TransacaoRepository {
     public List<Transacao> findAll(String orderBy, String direction) {
         String orderClause = buildOrderClause(orderBy, direction);
         String query = "SELECT t.*, c.nome as categoria_nome FROM Transacao t " + 
-                      "LEFT JOIN Categoria c ON t.categoria_id = c.id " +
-                      orderClause;
+                        "LEFT JOIN Categoria c ON t.categoria_id = c.id " +
+                        orderClause;
         return jdbcTemplate.query(query, rowMapper);
     }
 
@@ -65,10 +65,8 @@ public class TransacaoRepository {
         StringBuilder query = new StringBuilder("SELECT t.*, c.nome as categoria_nome FROM Transacao t ");
         query.append("LEFT JOIN Categoria c ON t.categoria_id = c.id ");
 
-        // Adiciona WHERE com as condições de mês e ano
         query.append("WHERE EXTRACT(MONTH FROM t.data) = ? AND EXTRACT(YEAR FROM t.data) = ? ");
 
-        // Adiciona ORDER BY
         query.append(buildOrderClause(orderBy, direction));
 
         return jdbcTemplate.query(query.toString(), rowMapper, mes, ano);
