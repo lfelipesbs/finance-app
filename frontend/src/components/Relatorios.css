@@ -1,0 +1,55 @@
+.relatorios {
+    padding: 1rem;
+}
+
+.relatorios h2 {
+    margin-bottom: 20px;
+}
+
+.relatorios .card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.relatorios .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.relatorios .text-success {
+    color: #28a745 !important;
+}
+
+.relatorios .text-danger {
+    color: #dc3545 !important;
+}
+
+.relatorios .form-control {
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+}
+
+.relatorios .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.relatorios canvas {
+    max-height: 400px;
+}
+
+.relatorios .card-body {
+    padding: 1.5rem;
+}
+
+.relatorios .row {
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.relatorios .col-md-4,
+.relatorios .col-md-6 {
+    padding-right: 10px;
+    padding-left: 10px;
+} 

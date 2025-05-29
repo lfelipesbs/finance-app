@@ -2,43 +2,94 @@ package com.example.finance.controller;
 
 import com.example.finance.model.Transacao;
 import com.example.finance.repository.TransacaoRepository;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/transacoes")
 @CrossOrigin(origins = "http://localhost:3000")
-
 public class TransacaoController {
-    private final TransacaoRepository repo;
+    private final TransacaoRepository transacaoRepository;
 
-    public TransacaoController(TransacaoRepository repo) {
-        this.repo = repo;
+    public TransacaoController(TransacaoRepository transacaoRepository) {
+        this.transacaoRepository = transacaoRepository;
     }
 
     @GetMapping
-    public List<Transacao> all() {
-        return repo.findAll();
+    public List<Transacao> findAll(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim,
+            @RequestParam(required = false) String orderBy,
+            @RequestParam(required = false) String direction) {
+        if (inicio != null || fim != null) {
+            return transacaoRepository.findByPeriodo(inicio, fim, orderBy, direction);
+        }
+        return transacaoRepository.findAll(orderBy, direction);
     }
 
-    @GetMapping("/{id}")
-    public Transacao one(@PathVariable int id) {
-        return repo.findById(id);
+    @GetMapping("/mes-ano")
+    public List<Transacao> findByMesAno(
+            @RequestParam int mes,
+            @RequestParam int ano,
+            @RequestParam(required = false) String orderBy,
+            @RequestParam(required = false) String direction) {
+        return transacaoRepository.findByMesAno(mes, ano, orderBy, direction);
+    }
+
+    @GetMapping("/periodo")
+    public List<Transacao> findByPeriodo(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim,
+            @RequestParam(required = false) String orderBy,
+            @RequestParam(required = false) String direction) {
+        return transacaoRepository.findByPeriodo(inicio, fim, orderBy, direction);
+    }
+
+    @GetMapping("/tipo/{tipo}")
+    public List<Transacao> findByTipo(
+            @PathVariable Transacao.Tipo tipo,
+            @RequestParam(required = false) String orderBy,
+            @RequestParam(required = false) String direction) {
+        return transacaoRepository.findByTipo(tipo, orderBy, direction);
+    }
+
+    @GetMapping("/categoria/{categoriaId}")
+    public List<Transacao> findByCategoriaId(
+            @PathVariable Long categoriaId,
+            @RequestParam(required = false) String orderBy,
+            @RequestParam(required = false) String direction) {
+        return transacaoRepository.findByCategoriaId(categoriaId, orderBy, direction);
+    }
+
+    @GetMapping("/latest")
+    public List<Transacao> findLatest(
+            @RequestParam(defaultValue = "5") int limit,
+            @RequestParam(required = false) Integer mes,
+            @RequestParam(required = false) Integer ano) {
+        if (mes != null && ano != null) {
+            return transacaoRepository.findLatestByMesAno(mes, ano, limit);
+        }
+        return transacaoRepository.findLatest(limit);
     }
 
     @PostMapping
-    public void create(@RequestBody Transacao t) {
-        repo.save(t);
+    public Transacao create(@RequestBody Transacao transacao) {
+        return transacaoRepository.save(transacao);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable int id, @RequestBody Transacao t) {
-        t.setId(id);
-        repo.update(t);
+    public Transacao update(@PathVariable Long id, @RequestBody Transacao transacao) {
+        transacao.setId(id);
+        return transacaoRepository.save(transacao);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        repo.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        transacaoRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

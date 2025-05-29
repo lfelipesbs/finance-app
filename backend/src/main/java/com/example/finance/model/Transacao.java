@@ -1,29 +1,38 @@
 package com.example.finance.model;
 
+import lombok.Data;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Data
 public class Transacao {
-    private Integer id;
-    private LocalDate data;
+    private Long id;
+    private LocalDate dataTransacao;
     private String descricao;
-    private Double valor;
-    private String tipo;
-    private Integer categoriaId;
+    private BigDecimal valor;
+    private Tipo tipo;
+    private Long categoriaId;
+    private String categoriaNome;
 
-    public Integer getId() {
+    public enum Tipo {
+        RECEITA,
+        DESPESA
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public LocalDate getData() {
-        return data;
+    public LocalDate getDataTransacao() {
+        return dataTransacao;
     }
 
-    public void setData(LocalDate data) {
-        this.data = data;
+    public void setDataTransacao(LocalDate dataTransacao) {
+        this.dataTransacao = dataTransacao;
     }
 
     public String getDescricao() {
@@ -34,27 +43,35 @@ public class Transacao {
         this.descricao = descricao;
     }
 
-    public Double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
-    public String getTipo() {
+    public Tipo getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
 
-    public Integer getCategoriaId() {
+    public Long getCategoriaId() {
         return categoriaId;
     }
 
-    public void setCategoriaId(Integer categoriaId) {
+    public void setCategoriaId(Long categoriaId) {
         this.categoriaId = categoriaId;
+    }
+
+    public String getCategoriaNome() {
+        return categoriaNome;
+    }
+
+    public void setCategoriaNome(String categoriaNome) {
+        this.categoriaNome = categoriaNome;
     }
 }

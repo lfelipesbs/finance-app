@@ -20,3 +20,221 @@ h1 {
 .btn.cancel { background: #dc3545; color: #fff; }
 .btn.edit { background: #ffc107; color: #333; }
 .btn.delete { background: #dc3545; color: #fff; }
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    background-color: #f8f9fa;
+}
+
+.content {
+    padding: 2rem;
+}
+
+.dashboard {
+    padding: 1rem;
+}
+
+.dashboard .row {
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.dashboard .col-md-4 {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.transacao-list {
+    padding: 1rem;
+}
+
+.transacao-list h2 {
+    margin-bottom: 20px;
+}
+
+.transacao-form {
+    padding: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.transacao-form h2 {
+    margin-bottom: 20px;
+}
+
+.card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Estilos para o gráfico */
+canvas {
+    max-height: 400px;
+}
+
+/* Estilos para os cards do dashboard */
+.dashboard .card {
+    transition: transform 0.2s;
+}
+
+.dashboard .card:hover {
+    transform: translateY(-5px);
+}
+
+/* Estilos para a tabela de transações */
+.transacao-list .table {
+    margin-top: 20px;
+}
+
+.transacao-list .table th {
+    white-space: nowrap;
+}
+
+/* Estilos para o formulário de transação */
+.transacao-form .card {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.transacao-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Estilos para os botões */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Estilos para os filtros */
+.transacao-list .card {
+    margin-bottom: 30px;
+}
+
+.transacao-list .form-group {
+    margin-bottom: 1rem;
+}
+
+/* Estilos para o cabeçalho */
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Estilos para a barra lateral */
+.sidebar {
+    width: 250px;
+    background-color: #343a40;
+    color: #fff;
+    padding: 1rem;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar .nav-link {
+    color: #fff;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-link.active {
+    background-color: #007bff;
+}
+
+/* Ajustes para o conteúdo principal */
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+
+    .sidebar {
+        position: fixed;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .dashboard .row {
+        margin-right: -10px;
+        margin-left: -10px;
+    }
+
+    .dashboard .col-md-4 {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}

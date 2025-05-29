@@ -1,33 +1,33 @@
-import React, { useState } from 'react'
-import InsertTransacaoForm from './components/InsertTransacaoForm'
-import TransacaoList from './components/TransacaoList'
-import EditTransacaoModal from './components/EditTransacaoModal'
-import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import Sidebar from './components/layout/Sidebar';
+import Header from './components/layout/Header';
+import Dashboard from './components/Dashboard';
+import TransacaoList from './components/TransacaoList';
+import Categorias from './components/Categorias';
+import Relatorios from './components/Relatorios';
+import './App.css';
 
-export default function App() {
-    const [editing, setEditing] = useState(null)
-    const [refreshTrigger, setRefreshTrigger] = useState(0)
-
-    const reload = () => setRefreshTrigger(t => t + 1)
-
+function App() {
     return (
-        <div className="container">
-            <h1>Gestão Financeira</h1>
-            <InsertTransacaoForm onSaved={reload} />
-            <TransacaoList
-                refreshTrigger={refreshTrigger}
-                onEdit={t => setEditing(t)}
-            />
-            {editing && (
-                <EditTransacaoModal
-                    transacao={editing}
-                    onCancel={() => setEditing(null)}
-                    onSaved={() => {
-                        setEditing(null)
-                        reload()
-                    }}
-                />
-            )}
-        </div>
-    )
+        <Router>
+            <div className="app">
+                <Sidebar />
+                <div className="main-content">
+                    <Header />
+                    <Container fluid className="content">
+                        <Routes>
+                            <Route path="/" element={<Dashboard />} />
+                            <Route path="/transacoes" element={<TransacaoList />} />
+                            <Route path="/categorias" element={<Categorias />} />
+                            <Route path="/relatorios" element={<Relatorios />} />
+                        </Routes>
+                    </Container>
+                </div>
+            </div>
+        </Router>
+    );
 }
+
+export default App;

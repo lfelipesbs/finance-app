@@ -76,9 +76,9 @@ CREATE TABLE Transacao (
     data DATE NOT NULL,
     descricao TEXT,
     valor DECIMAL(10,2) NOT NULL CHECK (valor >= 0),
-    tipo ENUM('receita','despesa') NOT NULL,
+    tipo ENUM('RECEITA','DESPESA') NOT NULL,
     categoria_id INT NOT NULL,
-    FOREIGN KEY (categoria_id) REFERENCES Categoria(id)
+    FOREIGN KEY (categoria_id) REFERENCES Categoria(id) ON DELETE CASCADE
 );
 
 CREATE TABLE FormaPagamento (
@@ -155,18 +155,55 @@ INSERT INTO Entidade_Comercial (razao_social, tipo, rua, numero, bairro, cidade,
     ('Cliente C',    'cliente',    'Travessa C', '50',  'Bela Vista', 'Belo Horizonte', 'MG', '30000‑000');
 
 INSERT INTO Categoria (nome) VALUES
-    ('venda'),
-    ('manutencao'),
-    ('salario'),
-    ('imposto'),
-    ('servicos');
+    ('Vendas'),
+    ('Serviços'),
+    ('Manutenção'),
+    ('Salário'),
+    ('Impostos'),
+    ('Marketing'),
+    ('Aluguel'),
+    ('Utilidades'),
+    ('Materiais de Escritório'),
+    ('Seguros'),
+    ('Juros e Multas'),
+    ('Receitas Financeiras');
 
 INSERT INTO Transacao (data, descricao, valor, tipo, categoria_id) VALUES
-    ('2025-04-01','Venda de produto X',    1500.00,'receita',1),
-    ('2025-04-05','Manutenção equipamento',  300.00,'despesa',2),
-    ('2025-04-07','Pagamento de salário',  2500.00,'despesa',3),
-    ('2025-04-10','Receita de serviços',   2000.00,'receita',5),
-    ('2025-04-12','Pagamento de imposto',   500.00,'despesa',4);
+    ('2025-01-05','Venda de 200 unidades do Produto A',               30000.00,'RECEITA', 1),
+    ('2025-01-10','Pagamento de aluguel sala comercial - Janeiro',      5000.00,'DESPESA', 7),
+    ('2025-01-25','Folha de pagamento janeiro - equipe administrativa',15000.00,'DESPESA', 4),
+    ('2025-02-03','Prestação de serviços de consultoria Projeto X',    12000.00,'RECEITA', 2),
+    ('2025-02-07','Conta de energia elétrica - Fevereiro',             2000.00,'DESPESA', 8),
+    ('2025-02-14','Campanha de marketing Facebook Ads',                4000.00,'DESPESA', 6),
+    ('2025-03-02','Venda de Software – licença anual',                 45000.00,'RECEITA', 1),
+    ('2025-03-10','Compra de materiais de escritório',                 1500.00,'DESPESA', 9),
+    ('2025-03-18','Contrato de manutenção preventiva mensal',          2500.00,'DESPESA', 3),
+    ('2025-04-01','Receita financeira – juros de aplicação',            800.00,'RECEITA',12),
+    ('2025-04-05','Prêmio seguro empresarial – Apólice 2025',          6000.00,'DESPESA',10),
+    ('2025-04-15','Folha de pagamento abril – equipe de vendas',       18000.00,'DESPESA', 4),
+    ('2025-05-02','Pagamento de impostos federais – DARF',             7500.00,'DESPESA', 5),
+    ('2025-05-12','Receita de serviços de manutenção corretiva',       7000.00,'RECEITA', 2),
+    ('2025-05-20','Multa por atraso de pagamento a fornecedor',         500.00,'DESPESA',11),
+    ('2025-06-08','Venda de pacote de extensão de garantia',           10000.00,'RECEITA', 1),
+    ('2025-06-12','Compra de licenças software CRM',                   9000.00,'DESPESA', 9),
+    ('2025-06-30','Receita financeira – retorno CDB',                  1200.00,'RECEITA',12),
+    ('2025-07-01','Pagamento de aluguel sala comercial – Julho',        5000.00,'DESPESA', 7),
+    ('2025-07-10','Conta de água e esgoto – Julho',                     500.00,'DESPESA', 8),
+    ('2025-07-22','Prestação de serviços de treinamento interno',       6000.00,'RECEITA', 2),
+    ('2025-08-05','Investimento em campanha Google Ads',               5500.00,'DESPESA', 6),
+    ('2025-08-15','Folha de pagamento agosto – equipe técnica',       17000.00,'DESPESA', 4),
+    ('2025-08-25','Venda de equipamento de automação',                28000.00,'RECEITA', 1),
+    ('2025-09-03','Contrato anual de manutenção corretiva',           30000.00,'RECEITA', 2),
+    ('2025-09-10','Serviço de manutenção de servidores',               3500.00,'DESPESA', 3),
+    ('2025-09-18','Prêmio seguro de responsabilidade civil',           4500.00,'DESPESA',10),
+    ('2025-10-01','Receita de consultoria TI – Projeto Y',            15000.00,'RECEITA', 2),
+    ('2025-10-08','Compra de mobília de escritório',                  12000.00,'DESPESA', 9),
+    ('2025-10-30','Juros recebidos por atraso de cliente',              650.00,'RECEITA',12),
+    ('2025-11-05','Venda de 500 unidades do Produto B',               75000.00,'RECEITA', 1),
+    ('2025-11-12','Pagamento de impostos municipais – ISS',            3000.00,'DESPESA', 5),
+    ('2025-11-20','Multa e juros por atraso a fornecedor',              800.00,'DESPESA',11),
+    ('2025-12-01','Bonificação de final de ano – equipe de vendas',   10000.00,'DESPESA', 4),
+    ('2025-12-05','Receita financeira – dividendos',                   2000.00,'RECEITA',12);
 
 INSERT INTO FormaPagamento (descricao) VALUES
     ('Dinheiro'),

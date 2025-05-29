@@ -1,0 +1,42 @@
+.categorias {
+    padding: 1rem;
+}
+
+.categorias h2 {
+    margin-bottom: 20px;
+}
+
+.categorias .card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.categorias .table th {
+    background-color: #f8f9fa;
+}
+
+.categorias .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.categorias .modal-content {
+    border-radius: 8px;
+}
+
+.categorias .modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.categorias .modal-title {
+    font-weight: 600;
+}
+
+.categorias .form-label {
+    font-weight: 500;
+}
+
+.categorias .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+} 

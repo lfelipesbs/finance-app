@@ -1,6 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -8,3 +23,5 @@ root.render(
         <App />
     </React.StrictMode>
 );
+
+reportWebVitals();
