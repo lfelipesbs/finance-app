@@ -1,9 +1,9 @@
-# Finance App - Módulo 1
+# Finance App - Módulo 2
 
-Este repositório contém o código completo do **Módulo 1** do Sistema de Gestão Financeira Simplificada:
+Este repositório contém o código completo do **Módulo 2** do Sistema de Gestão Financeira Simplificada:
 - Modelagem lógica e script SQL de criação e povoamento
-- Back‑end Java (Spring Boot + JDBC puro)
-- Front‑end React.js (Create React App)
+- Back‑end Java (Spring Boot + JDBC puro)
+- Front‑end React.js (Create React App)
 
 ---
 
@@ -13,7 +13,7 @@ Antes de começar, certifique‑se de ter instalado em sua máquina:
 
 - **Git** (https://git-scm.com)
 - **MySQL** (versão 8.x)
-- **Java 17** e **Maven**
+- **Java 17** e **Maven**
 - **Node.js** (14.x ou superior) e **npm**
 
 ---
@@ -53,7 +53,7 @@ cd finance-app
 
 ---
 
-## ⚙️ Configurar Back‑end (Java/Spring Boot)
+## ⚙️ Configurar Back‑end (Java/Spring Boot)
 
 1. Abra `backend/src/main/resources/application.example.properties` (altere o nome do arquivo para application.properties) e ajuste:
 
@@ -98,11 +98,62 @@ cd finance-app
 
 ---
 
-## 🚀 Testando o CRUD
+## 🚀 Funcionalidades
 
-- **Inserir**: use o formulário no topo para adicionar transações
-- **Editar**: clique em ✏️ e edite via modal
-- **Excluir**: clique em 🗑️
-- A lista atualiza automaticamente
+### Transações
+- **Inserir**: Modal de criação com campos para descrição, valor, data, tipo e categoria
+- **Editar**: Modal de edição com campos pré-preenchidos
+- **Excluir**: Exclusão com confirmação
+- **Filtrar**: 
+  - Por data (início e fim)
+  - Por tipo (receita/despesa)
+  - Por categoria
+- **Ordenar**: 
+  - Por data
+  - Por valor
+  - Por descrição
+  - Por categoria
+- **Formatação**: Valores em reais (R$) e datas no formato brasileiro
+
+### Categorias
+- **Inserir**: Modal de criação com nome e tipo
+- **Editar**: Modal de edição com campos pré-preenchidos
+- **Excluir**: 
+  - Confirmação antes de excluir
+  - Proteção contra exclusão de categorias com transações
+- **Visualizar**: Tabela com todas as categorias
+- **Filtrar**: Por tipo (receita/despesa)
+
+### Dashboard
+- **Resumo Financeiro**:
+  - Total de receitas
+  - Total de despesas
+  - Saldo atual
+- **Gráficos**:
+  - Receitas vs Despesas
+  - Distribuição por categoria
+- **Filtros**: Por período (mês atual, mês anterior, etc.)
+
+### Relatórios
+- **Análise Financeira**:
+  - Evolução de receitas e despesas
+  - Distribuição por categoria
+  - Tendências
+- **Filtros**:
+  - Por período
+  - Por tipo de transação
+  - Por categoria
+
+### Interface
+- **Responsiva**: Adaptável a diferentes tamanhos de tela
+- **Modais**: Para criação e edição de registros
+- **Validação**: Em tempo real dos campos
+- **Feedback**: Mensagens de sucesso e erro
+- **Navegação**: Menu lateral com acesso rápido às funcionalidades
+
+### Segurança
+- **Validação de Dados**: No frontend e backend
+- **Proteção de Dados**: Contra exclusão acidental
+- **Tratamento de Erros**: Mensagens amigáveis para o usuário
 
 ---
